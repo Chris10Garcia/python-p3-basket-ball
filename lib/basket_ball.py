@@ -1,3 +1,5 @@
+
+
 def game_dict():
     return {
         "home": {
@@ -182,3 +184,72 @@ def game_dict():
             ]
         }
     }
+
+
+def num_points_per_game(player_search):
+    playerlist = game_dict()["home"]["players"] + game_dict()["away"]["players"]
+    # for player in playerlist:
+    #     if player["name"] == player_search:
+    #         return player["points_per_game"] 
+        
+    return [player["points_per_game"] for player in playerlist if player["name"] == player_search][0]
+
+
+def player_age(player_search):
+    playerlist = game_dict()["home"]["players"] + game_dict()["away"]["players"]
+    return [player["age"] for player in playerlist if player["name"] == player_search][0]
+
+def team_colors(team_search):
+    team_color = game_dict()["home"]["colors"] if game_dict()["home"]["team_name"] == team_search else game_dict()["away"]["colors"]
+    return team_color
+
+def team_names():
+    names = [game_dict()["home"]["team_name"], game_dict()["away"]["team_name"]]
+    return names
+
+def player_numbers(team_name):
+    if game_dict()["home"].get("team_name") == team_name:
+        playerlist = game_dict()["home"]["players"]
+    else:
+        playerlist = game_dict()["away"]["players"]
+    
+    numbers = [player["number"] for player in playerlist]
+
+    return numbers
+
+def player_stats(name):
+    playerlist = game_dict()["home"]["players"] + game_dict()["away"]["players"]
+
+    return [player for player in playerlist if player["name"] == name][0]
+
+def average_rebounds_by_shoe_brand():
+    playerlist = game_dict()["home"]["players"] + game_dict()["away"]["players"]
+
+    # brand_dictionary = { player["shoe_brand"] : [player["rebounds_per_game"]] for player in playerlist}
+    brand_dictionary = { player["shoe_brand"] : [] for player in playerlist}
+    # print(brand_dictionary)
+
+    # messages = ["{}: {:.2f}".format(key, sum(value)/len(value)) for key, value in brand_dictionary.items()]
+    
+    # brand_dictionary = {}
+
+    # for brand in brands:
+    #     brand_dictionary[brand] = []
+    
+    # print(brand_dictionary)
+
+    # for key, value in brand_dictionary.items():
+    #     for player in playerlist:
+    #         brand_dictionary[key].append(player["rebounds_per_game"])
+    
+    for player in playerlist:
+        # brand_dictionary[player["shoe_brand"]] = brand_dictionary[player["shoe_brand"]].append(player["rebounds_per_game"])
+        brand_dictionary[player["shoe_brand"]].append(player["rebounds_per_game"])
+    # print(brand_dictionary)
+
+    messages = ["{}:  {:.2f}".format(key, sum(value)/len(value)) for key, value in brand_dictionary.items()]
+    for message in messages:
+        print(message)
+
+    # avg = sum(rebounds)/len(rebounds)
+    # return avg
